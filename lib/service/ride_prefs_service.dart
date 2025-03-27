@@ -1,23 +1,65 @@
-//./service/ride_prefs_service.dart
+// import '../model/ride/ride_pref.dart';
+// import '../repository/ride_preferences_repository.dart';
 
+// ////
+// ///   This service handles:
+// ///   - The past ride preferences
+// ///   - The currennt ride preferences
+// ///
+// class RidePrefService {
+//   // Static private instance
+//   static RidePrefService? _instance;
 
-import '../dummy_data/dummy_data.dart';
-import '../model/ride_pref/ride_pref.dart';
+//   // Access to past preferences
+//   final RidePreferencesRepository repository;
 
-////
-///   This service handles:
-///   - History of the last ride preferences        (to allow users to re-use their last preferences)
-///   - Curent selected ride preferences.
-///
-class RidePrefService {
+//   // The current preference
+//   RidePreference? _currentPreference;
 
-  ///
-  /// List of past entered ride prefs. LIFO (most recents first)
-  ///
-  static List<RidePref> ridePrefsHistory = fakeRidePrefs;   // TODO for now fake data
+//   ///
+//   /// Private constructor
+//   ///
+//   RidePrefService._internal(this.repository);
 
-  static RidePref? currentRidePref;
- 
-  static bool get hasCurrentRidePref => currentRidePref != null;
-  
-}
+//   ///
+//   /// Initialize
+//   ///
+//   static void initialize(RidePreferencesRepository repository) {
+//     if (_instance == null) {
+//       _instance = RidePrefService._internal(repository);
+//     } else {
+//       throw Exception("RidePreferencesService is already initialized.");
+//     }
+//   }
+
+//   ///
+//   /// Singleton accessor
+//   ///
+//   static RidePrefService get instance {
+//     if (_instance == null) {
+//       throw Exception(
+//           "RidePreferencesService is not initialized. Call initialize() first.");
+//     }
+//     return _instance!;
+//   }
+
+//   // Current preference
+//   RidePreference? get currentPreference {
+//     print('Get  current  pref : $_currentPreference');
+//     return _currentPreference;
+//   }
+
+//   void setCurrentPreference(RidePreference preference) {
+//     _currentPreference = preference;
+//     print('Set current pref to $_currentPreference');
+//   }
+
+//   // Past preferences
+//   List<RidePreference> getPastPreferences() {
+//     return repository.getPastPreferences();
+//   }
+
+//   void addPreference(RidePreference preference) {
+//     return repository.addPreference(preference);
+//   }
+// }

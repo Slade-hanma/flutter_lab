@@ -1,15 +1,9 @@
-//./model/ride/ride.dart
-import 'package:week_3_blabla_project/model/ride/locations.dart';
+import '../location/locations.dart';
 
 import '../../utils/date_time_util.dart';
 import '../user/user.dart';
 
-enum RideStatus {
-  created,
-  published,
-  ongoing,
-  finished;
-}
+enum RideStatus { created, published, ongoing, finished }
 
 ///
 /// This model describes a  Ride.
@@ -26,6 +20,8 @@ class Ride {
   final int availableSeats;
   final double pricePerSeat;
 
+  final bool acceptPets;
+
   RideStatus status = RideStatus.created;
 
   final List<User> passengers = [];
@@ -38,6 +34,7 @@ class Ride {
     required this.driver,
     required this.availableSeats,
     required this.pricePerSeat,
+    this.acceptPets = false, // by default
   });
 
   void addPassenger(User passenger) {

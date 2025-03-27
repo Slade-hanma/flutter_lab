@@ -1,45 +1,42 @@
-// import 'package:flutter/material.dart';
-// import 'screens/ride_pref/ride_pref_screen.dart';
-// import 'theme/theme.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
+import 'repository/mock/mock_locations_repository.dart';
+import 'repository/mock/mock_rides_repository.dart';
+import 'service/locations_service.dart';
+import 'service/rides_service.dart';
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       theme: appTheme,
-//       home: Scaffold(body: RidePrefScreen()),
-//     );
-//   }
-// }
-
-import 'package:week_3_blabla_project/service/rides_service.dart';
-import 'package:week_3_blabla_project/model/ride/ride.dart';
+import 'repository/mock/mock_ride_preferences_repository.dart';
+import 'ui/screens/ride_pref/ride_pref_screen.dart';
+import 'provider/rides_pref_provider.dart'; // Ensure this import is correct
 
 void main() {
-  // Display the available rides
-  print("Available Rides Today:");
+  // 1 - Initialize the services
+  // RidePrefService.initialize(MockRidePreferencesRepository());
+  LocationsService.initialize(MockLocationsRepository());
+  RidesService.initialize(MockRidesRepository());
 
-  // Get today's date
-  DateTime today = DateTime.now();
-  DateTime startOfDay = DateTime(today.year, today.month, today.day);
-  DateTime endOfDay = startOfDay.add(Duration(days: 1));
+  // 2- Run the UI
+  runApp(const MyApp());
+}
 
-  // Filter rides based on today's date
-  List<Ride> availableRidesToday = RidesService.availableRides.where((ride) =>
-      ride.departureDate.isAfter(startOfDay) && ride.departureDate.isBefore(endOfDay)).toList();
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-  if (availableRidesToday.isEmpty) {
-    print("No rides available today.");
-  } else {
-    for (var ride in availableRidesToday) {
-      print(ride); // This will use the overridden toString method
-    }
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => RidesPreferencesProvider(MockRidePreferencesRepository()),
+        ),
+        // Add other providers here as needed
+      ],
+      child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.light(),
+      home: Scaffold(body: RidePrefScreen()),
+      ),
+    );
   }
 }
